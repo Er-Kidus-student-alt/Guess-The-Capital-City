@@ -1,9 +1,10 @@
 //! input
 
-const username = "Mati";
+const currentUser = document.querySelector(".login__input");
 
 //!Select labbles
 
+const gameContent = document.querySelector(".container");
 const user = document.querySelector(".user");
 const chanceLeft = document.querySelector(".Chance-Left");
 const score = document.querySelector(".score");
@@ -18,11 +19,8 @@ const next = document.querySelector(".next");
 const newGame = document.querySelector(".newGame");
 const question = document.querySelector(".question-cont");
 const rendmsg = document.querySelector(".message-render");
-
-// ! selecting msgs
-
-const message1 = `Your are so dumb ${username}! how could you miss that. you have only 1 chance`;
-const lastmessage = `Get out of here!! You're Stupid basterd`;
+const login = document.querySelector(".login_btn");
+const logincont = document.querySelector(".loginCont");
 
 //! global Variables
 
@@ -30,13 +28,19 @@ let allData = [];
 let internalScore = 0;
 let internalChance = 3;
 let currentCountry2;
+let username;
+
+// ! selecting msgs
+
+const message1 = `Your are so dumb ${username}! how could you miss that. you have only 1 chance`;
+const lastmessage = `Get out of here!! You're Stupid basterd`;
 
 //!  render badMessage
 
-const badMessage = function (identifier) {
-  if (identifier === 1) return message1;
-  if (identifier === 0) return lastmessage;
-};
+// const badMessage = function (identifier) {
+//   if (identifier === 1) return message1;
+//   if (identifier === 0) return lastmessage;
+// };
 
 //! window load
 const emptytab = function () {
@@ -140,7 +144,6 @@ choiceCont.addEventListener("click", function (event) {
       clicked.style.backgroundColor = "rgb(85, 255, 0)";
       internalScore++;
       score.textContent = internalScore;
-      console.log(remainChance);
     }
 
     if (clicked.textContent !== currentCountry2.capital) {
@@ -150,13 +153,15 @@ choiceCont.addEventListener("click", function (event) {
     }
   }
   if (internalChance === 1) {
-    const msg = badMessage(internalChance);
-    rendmsg.textContent = msg;
+    const message1 = `Your are so dumb ${username}! how could you miss that. you have only 1 chance`;
+
+    rendmsg.textContent = message1;
   }
 
   if (internalChance === 0) {
-    const msg = badMessage(internalChance);
-    rendmsg.textContent = msg;
+    const lastmessage = `Get out of here!! You're Stupid basterd`;
+
+    rendmsg.textContent = lastmessage;
   }
 });
 
@@ -165,7 +170,6 @@ if (!(internalChance === 0)) {
     resetChoice();
     const randomNumber = Math.floor(Math.random() * 250) + 1;
     getCountryData(randomNumber);
-    console.log(remainChance);
   });
 
   start.addEventListener("click", function () {
@@ -175,9 +179,18 @@ if (!(internalChance === 0)) {
   });
 }
 
-window.onload = function () {
+login.addEventListener("click", function (e) {
+  e.preventDefault();
+  let username2 = currentUser.value;
+  username = username2;
+  user.textContent = `Welcome ${username}`;
+  if (username2) {
+    // logincont.classList.add("hidden");
+    // gameContent.classList.add("show");
+  }
+
   emptytab();
-};
+});
 
 newGame.addEventListener("click", function () {
   rendmsg.textContent = "";
