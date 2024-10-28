@@ -11,9 +11,13 @@ body {
 }
 .container {
   width: 70%;
-  height: 80%;
+  height: 85%;
   background-color: rgb(148, 104, 77);
   box-shadow: 0 25px 30px rgba(0, 0, 0, 0.374);
+  position: relative;
+}
+.contentDiv {
+  height: 90%;
 }
 .upper {
   width: 100%;
@@ -31,7 +35,7 @@ body {
 .question-cont {
   width: 90%;
   height: 120px;
-  background-color: aquamarine;
+  background-color: hsl(100, 100%, 50%);
   margin: 30px auto;
   text-align: center;
   line-height: 120px;
@@ -49,6 +53,7 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  color: white;
 }
 
 .choice:hover {
@@ -59,25 +64,27 @@ body {
   display: flex;
   justify-content: space-evenly;
   width: 80%;
-  height: 40%;
+  height: 60%;
 }
 .choiceUpper--left {
-  background-color: rgb(89, 222, 27);
+  background-color: rgb(77, 134, 109);
   width: 40%;
   text-align: center;
   align-self: center;
   font-size: 25px;
   padding: 7px;
   border-radius: 10px;
+  height: 30px;
 }
 .choiceUpper--right {
-  background-color: rgb(89, 222, 27);
+  background-color: rgb(77, 134, 109);
   width: 40%;
   text-align: center;
   align-self: center;
   font-size: 25px;
   padding: 7px;
   border-radius: 10px;
+  height: 30px;
 }
 .choiceLower {
   display: flex;
@@ -89,22 +96,24 @@ body {
 }
 
 .choiceLower--left {
-  background-color: rgb(89, 222, 27);
+  background-color: rgb(77, 134, 109);
   width: 40%;
   text-align: center;
   align-self: center;
   font-size: 25px;
   padding: 7px;
   border-radius: 10px;
+  height: 30px;
 }
 .choiceLower--right {
-  background-color: rgb(89, 222, 27);
+  background-color: rgb(77, 134, 109);
   width: 40%;
   text-align: center;
   align-self: center;
   font-size: 25px;
   padding: 7px;
   border-radius: 10px;
+  height: 30px;
 }
 
 .message {
@@ -122,4 +131,30 @@ body {
 }
 .msg-2 {
   display: none;
+}
+
+.lowerButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%);
+}
+.lowerButtons .start {
+  background-color: antiquewhite;
+  margin: 0 15px;
+  padding: 5px;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+}
+.lowerButtons .next {
+  background-color: antiquewhite;
+  margin: 0 15px;
+  padding: 5px;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
 }
