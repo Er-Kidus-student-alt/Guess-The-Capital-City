@@ -21,6 +21,10 @@ const question = document.querySelector(".question-cont");
 const rendmsg = document.querySelector(".message-render");
 const login = document.querySelector(".login_btn");
 const logincont = document.querySelector(".loginCont");
+const congratCont = document.querySelector(".CongraMessage");
+const failCont = document.querySelector(".failMessage");
+const tryagain = document.querySelector(".failMessage__button");
+const playagain = document.querySelector(".CongraMessage__button");
 
 //! global Variables
 
@@ -35,7 +39,26 @@ let username;
 const message1 = `Your are so dumb ${username}! how could you miss that. you have only 1 chance`;
 const lastmessage = `Get out of here!! You're Stupid basterd`;
 
-//!  render badMessage
+//!  back to game
+
+const cleaner = function (input) {
+  next.style.pointerEvents = "all";
+  next.style.color = "black";
+  start.style.pointerEvents = "all";
+  start.style.color = "black";
+  chanceLeft.textContent = "3";
+
+  score.textContent = "0";
+  internalScore = 0;
+  internalChance = 3;
+  rendmsg.textContent = "";
+  quiz.textContent = ``;
+  question.textContent = "";
+  A.textContent = "";
+  B.textContent = "";
+  C.textContent = "";
+  D.textContent = "";
+};
 
 // const badMessage = function (identifier) {
 //   if (identifier === 1) return message1;
@@ -96,7 +119,6 @@ const getCountryData = async function (random) {
     const response = await fetch(
       "https://countriesnow.space/api/v0.1/countries/capital"
     );
-    console.log(random);
 
     const datap = await response.json();
     const { data } = datap;
@@ -108,7 +130,7 @@ const getCountryData = async function (random) {
     const currentCountry = allData[random];
     currentCountry2 = currentCountry;
     const chNumbers = generateNumbers();
-    console.log(chNumbers);
+
     let A, B, C, D;
 
     for ([ind, val] of chNumbers.entries()) {
@@ -117,8 +139,6 @@ const getCountryData = async function (random) {
       if (ind === 2) C = val;
       if (ind === 3) D = val;
     }
-    console.log(currentCountry);
-    console.log(A, B, C, D);
 
     const choice1 = allData[random - A].capital;
     const choice2 = allData[random + B].capital;
@@ -127,8 +147,6 @@ const getCountryData = async function (random) {
 
     const datarendered = { choice1, choice2, choice3, choice4, currentCountry };
     renderQuestion(datarendered);
-    console.log(currentCountry);
-    console.log(choice1, choice2, choice3, choice4);
   } catch (error) {
     console.log(error);
   }
@@ -137,21 +155,28 @@ const getCountryData = async function (random) {
 choiceCont.addEventListener("click", function (event) {
   event.preventDefault();
   if (!(internalChance === 0)) {
-    if (internalScore === 30) {
+    if (internalScore === 2) {
+      gameContent.classList.remove("show");
+      congratCont.style.display = "block";
     }
     const clicked = event.target.closest(".choice");
     if (clicked.textContent === currentCountry2.capital) {
+      next.style.pointerEvents = "all";
+      next.style.color = "black";
       clicked.style.backgroundColor = "rgb(85, 255, 0)";
       internalScore++;
       score.textContent = internalScore;
     }
 
     if (clicked.textContent !== currentCountry2.capital) {
+      next.style.pointerEvents = "all";
+      next.style.color = "black";
       clicked.style.backgroundColor = "rgb(252, 0, 0)";
       internalChance--;
       chanceLeft.textContent = internalChance;
     }
   }
+
   if (internalChance === 1) {
     const message1 = `Your are so dumb ${username}! how could you miss that. you have only 1 chance`;
 
@@ -159,24 +184,35 @@ choiceCont.addEventListener("click", function (event) {
   }
 
   if (internalChance === 0) {
-    const lastmessage = `Get out of here!! You're Stupid basterd`;
+    console.log(failCont);
+    gameContent.classList.remove("show");
+    failCont.style.display = "block";
 
-    rendmsg.textContent = lastmessage;
+    next.style.pointerEvents = "none";
+    next.style.color = "gray";
+    start.style.pointerEvents = "none";
+    start.style.color = "gray";
   }
 });
 
 if (!(internalChance === 0)) {
   next.addEventListener("click", function () {
     resetChoice();
+    next.style.pointerEvents = "none";
+    next.style.color = "grey";
     const randomNumber = Math.floor(Math.random() * 250) + 1;
     getCountryData(randomNumber);
   });
 
   start.addEventListener("click", function () {
+    start.style.pointerEvents = "none";
+    start.style.color = "grey";
+
     rendmsg.textContent = "Good Luck!";
     const randomNumber = Math.floor(Math.random() * 250) + 1;
     getCountryData(randomNumber);
   });
+} else if (internalChance === 0) {
 }
 
 login.addEventListener("click", function (e) {
@@ -185,19 +221,29 @@ login.addEventListener("click", function (e) {
   username = username2;
   user.textContent = `Welcome ${username}`;
   if (username2) {
-    // logincont.classList.add("hidden");
-    // gameContent.classList.add("show");
+    logincont.classList.add("hidden");
+    gameContent.classList.add("show");
+    failCont.classList.remove("hidden");
   }
 
   emptytab();
 });
 
+tryagain.addEventListener("click", function () {
+  cleaner();
+  resetChoice();
+  failCont.style.display = "none";
+  gameContent.classList.add("show");
+});
+
+playagain.addEventListener("click", function () {
+  cleaner();
+  resetChoice();
+  congratCont.style.display = "none";
+  gameContent.classList.add("show");
+});
+
 newGame.addEventListener("click", function () {
-  rendmsg.textContent = "";
-  quiz.textContent = ``;
-  question.textContent = "";
-  A.textContent = "";
-  B.textContent = "";
-  C.textContent = "";
-  D.textContent = "";
+  cleaner();
+  resetChoice();
 });
