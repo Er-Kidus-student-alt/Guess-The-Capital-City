@@ -16,34 +16,37 @@ body {
 .container {
   width: 70%;
   height: 85%;
-  background-color: rgb(148, 104, 77);
+  background-color: rgba(148, 104, 77, 0.413);
   box-shadow: 0 25px 30px rgba(0, 0, 0, 0.374);
   position: relative;
   display: none;
+  border-radius: 8px;
 }
 .contentDiv {
   height: 90%;
+  border-radius: 8px;
 }
 .upper {
   width: 100%;
   height: 15%;
-  color: white;
-  background-color: rgb(255, 72, 72);
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 72, 72, 0.687);
   display: flex;
   justify-content: space-around;
+  border-radius: 8px;
 }
 
 .upper .label {
   align-self: center;
-  font-size: 25px;
+  font-size: 29px;
 }
 .question-cont {
   width: 90%;
-  height: 120px;
+  height: 100px;
   background-color: hsl(100, 100%, 50%);
   margin: 30px auto;
   text-align: center;
-  line-height: 120px;
+  line-height: 100px;
   font-size: 25px;
   border-radius: 10px;
 }
@@ -140,12 +143,14 @@ body {
 
 .lowerButtons {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   left: 50%;
   transform: translate(-50%);
+  height: 60px;
+  width: 80%;
 }
 .lowerButtons .start {
   background-color: antiquewhite;
@@ -154,14 +159,20 @@ body {
   width: 80px;
   text-align: center;
   cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+  font-size: 25px;
 }
 .lowerButtons .next {
   background-color: antiquewhite;
   margin: 0 15px;
   padding: 5px;
-  width: 80px;
+  width: 120px;
   text-align: center;
   cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+  font-size: 25px;
 }
 
 .lowerButtons .star {
@@ -203,7 +214,7 @@ body {
   height: 30px;
   width: 320px;
   padding: 8px;
-  font-size: 18px;
+  font-size: 22px;
   outline: none;
   letter-spacing: 10px;
   font-weight: bold;

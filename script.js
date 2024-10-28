@@ -25,12 +25,13 @@ const congratCont = document.querySelector(".CongraMessage");
 const failCont = document.querySelector(".failMessage");
 const tryagain = document.querySelector(".failMessage__button");
 const playagain = document.querySelector(".CongraMessage__button");
+const failName = document.querySelector(".failMessage-name");
 
 //! global Variables
 
 let allData = [];
 let internalScore = 0;
-let internalChance = 3;
+let internalChance = 5;
 let currentCountry2;
 let username;
 
@@ -42,15 +43,14 @@ const lastmessage = `Get out of here!! You're Stupid basterd`;
 //!  back to game
 
 const cleaner = function (input) {
-  next.style.pointerEvents = "all";
-  next.style.color = "black";
+  next.style.pointerEvents = "none";
+  next.style.color = "gray";
   start.style.pointerEvents = "all";
   start.style.color = "black";
-  chanceLeft.textContent = "3";
-
+  chanceLeft.textContent = "5";
   score.textContent = "0";
   internalScore = 0;
-  internalChance = 3;
+  internalChance = 5;
   rendmsg.textContent = "";
   quiz.textContent = ``;
   question.textContent = "";
@@ -59,11 +59,13 @@ const cleaner = function (input) {
   C.textContent = "";
   D.textContent = "";
 };
+//! User Name Editor
 
-// const badMessage = function (identifier) {
-//   if (identifier === 1) return message1;
-//   if (identifier === 0) return lastmessage;
-// };
+const nameEditor = function (name) {
+  return (
+    name.toLowerCase().charAt(0).toUpperCase() + name.toLowerCase().slice(1)
+  );
+};
 
 //! window load
 const emptytab = function () {
@@ -105,7 +107,7 @@ function generateNumbers() {
 
 const renderQuestion = function (data) {
   question.textContent = `"What is the capital city of ${data.currentCountry.name} ?`;
-  // quiz.textContent = `${data.currentCountry.name}`;
+  question.style.fontSize = "35px";
   A.textContent = `${data.choice1}`;
   B.textContent = `${data.choice2}`;
   C.textContent = `${data.choice3}`;
@@ -140,10 +142,10 @@ const getCountryData = async function (random) {
       if (ind === 3) D = val;
     }
 
-    const choice1 = allData[random - A].capital;
-    const choice2 = allData[random + B].capital;
-    const choice3 = allData[random - C].capital;
-    const choice4 = allData[random + D].capital;
+    const choice1 = allData[random - A]?.capital || currentCountry.allData[164];
+    const choice2 = allData[random + B]?.capital || currentCountry.allData[7];
+    const choice3 = allData[random - C]?.capital || currentCountry.allData[14];
+    const choice4 = allData[random + D]?.capital || currentCountry.allData[51];
 
     const datarendered = { choice1, choice2, choice3, choice4, currentCountry };
     renderQuestion(datarendered);
@@ -153,9 +155,11 @@ const getCountryData = async function (random) {
 };
 
 choiceCont.addEventListener("click", function (event) {
+  rendmsg.textContent = "";
+  choiceCont.style.pointerEvents = "none";
   event.preventDefault();
   if (!(internalChance === 0)) {
-    if (internalScore === 2) {
+    if (internalScore === 1) {
       gameContent.classList.remove("show");
       congratCont.style.display = "block";
     }
@@ -184,9 +188,10 @@ choiceCont.addEventListener("click", function (event) {
   }
 
   if (internalChance === 0) {
-    console.log(failCont);
     gameContent.classList.remove("show");
     failCont.style.display = "block";
+    failName.textContent = username;
+    failName.style.color = "rgb(252, 0, 0)";
 
     next.style.pointerEvents = "none";
     next.style.color = "gray";
@@ -199,6 +204,7 @@ if (!(internalChance === 0)) {
   next.addEventListener("click", function () {
     resetChoice();
     next.style.pointerEvents = "none";
+    choiceCont.style.pointerEvents = "all";
     next.style.color = "grey";
     const randomNumber = Math.floor(Math.random() * 250) + 1;
     getCountryData(randomNumber);
@@ -209,17 +215,17 @@ if (!(internalChance === 0)) {
     start.style.color = "grey";
 
     rendmsg.textContent = "Good Luck!";
+    rendmsg.style.color = "rgb(253, 3, 3)";
     const randomNumber = Math.floor(Math.random() * 250) + 1;
     getCountryData(randomNumber);
   });
-} else if (internalChance === 0) {
 }
 
 login.addEventListener("click", function (e) {
   e.preventDefault();
   let username2 = currentUser.value;
-  username = username2;
-  user.textContent = `Welcome ${username}`;
+  username = nameEditor(username2);
+  user.textContent = `Welcome : ${username}`;
   if (username2) {
     logincont.classList.add("hidden");
     gameContent.classList.add("show");
