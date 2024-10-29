@@ -194,6 +194,7 @@ const getCountryData = async function (random) {
 
 choiceCont.addEventListener("click", function (event) {
   rendmsg.textContent = "";
+  const clicked = event.target.closest(".choice");
   choiceCont.style.pointerEvents = "none";
   event.preventDefault();
   if (!(internalChance === 0)) {
@@ -201,7 +202,7 @@ choiceCont.addEventListener("click", function (event) {
       gameContent.classList.remove("show");
       congratCont.style.display = "block";
     }
-    const clicked = event.target.closest(".choice");
+
     if (clicked.textContent === currentCountry2.capital) {
       next.style.pointerEvents = "all";
       next.style.color = "black";
@@ -219,9 +220,8 @@ choiceCont.addEventListener("click", function (event) {
     }
   }
 
-  if (internalChance === 1) {
+  if (internalChance === 1 && clicked.textContent !== currentCountry2.capital) {
     const message1 = `Your are so dumb ${username}! how could you miss that. you have only 1 chance`;
-
     rendmsg.textContent = message1;
   }
 
