@@ -185,7 +185,7 @@ const getCountryData = async function (random) {
     const datarendered = { choice1, choice2, choice3, choice4, currentCountry };
     renderQuestion(datarendered);
   } catch (error) {
-    const msg = ` Difficulty Fetching all data:Please Click New Game button`;
+    const msg = ` Difficulty Fetching all data:Please Click Next button Again`;
     rendmsg.textContent = msg;
     rendmsg.style.color = "red";
     next.style.pointerEvents = "all";
