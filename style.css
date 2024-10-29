@@ -100,7 +100,6 @@ body {
   width: 80%;
   height: 40%;
   font-size: 25px;
-  /* border-radius: 10px; */
 }
 
 .choiceLower--left {
@@ -222,7 +221,6 @@ body {
 .login_btn {
   display: block;
   color: rgb(255, 255, 255);
-
   padding: 10px;
   text-decoration: none;
   font-size: 25px;
@@ -303,7 +301,6 @@ body {
 .CongraMessage__button {
   display: block;
   color: rgb(255, 252, 252);
-
   padding: 15px;
   text-decoration: none;
   font-size: 25px;
@@ -349,7 +346,6 @@ body {
 .failMessage__button {
   display: block;
   color: rgb(255, 252, 252);
-
   padding: 15px;
   text-decoration: none;
   font-size: 25px;
