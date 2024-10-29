@@ -237,6 +237,14 @@ body {
   animation-duration: 1.2s;
   animation-fill-mode: forwards;
 }
+
+.login-error {
+  position: absolute;
+  left: 50%;
+  bottom: 30%;
+  transform: translate(-50%);
+  display: none;
+}
 .login_btn:hover {
   background-color: white;
   color: black;

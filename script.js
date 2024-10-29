@@ -26,6 +26,7 @@ const failCont = document.querySelector(".failMessage");
 const tryagain = document.querySelector(".failMessage__button");
 const playagain = document.querySelector(".CongraMessage__button");
 const failName = document.querySelector(".failMessage-name");
+const loginError = document.querySelector(".login-error");
 
 //! global Variables
 
@@ -40,6 +41,28 @@ let username;
 const message1 = `Your are so dumb ${username}! how could you miss that. you have only 1 chance`;
 const lastmessage = `Get out of here!! You're Stupid basterd`;
 
+//! login Function
+
+const loginCallBack = function (e) {
+  e.preventDefault();
+  let username2 = currentUser.value;
+  if (username2 && checkName(username2)) {
+    username = nameEditor(username2);
+    user.textContent = `Welcome : ${username}`;
+    logincont.classList.add("hidden");
+    gameContent.classList.add("show");
+    failCont.classList.remove("hidden");
+  }
+  if (!checkName(username2)) {
+    loginError.textContent = "Your Name Contains A Number !!";
+    loginError.style.fontSize = "22px";
+    loginError.style.color = "red";
+    loginError.style.display = "block";
+  }
+
+  emptytab();
+};
+
 //!  back to game
 
 const cleaner = function (input) {
@@ -52,7 +75,7 @@ const cleaner = function (input) {
   internalScore = 0;
   internalChance = 5;
   rendmsg.textContent = "";
-  quiz.textContent = ``;
+  quiz.textContent = "";
   question.textContent = "";
   A.textContent = "";
   B.textContent = "";
@@ -78,6 +101,17 @@ const emptytab = function () {
   D.textContent = "";
 };
 
+//! usercheaker
+
+const checkName = function (name) {
+  let numcheck = true;
+  const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  for (x of numbers) {
+    if (name.includes(x)) numcheck = false;
+  }
+  return numcheck;
+};
+
 //! Reset choice
 
 const resetChoice = function () {
@@ -101,7 +135,7 @@ function generateNumbers() {
   numbers.push(0);
 
   numbers.sort(() => Math.random() - 0.5);
-
+  console.log(numbers);
   return numbers;
 }
 
@@ -132,7 +166,7 @@ const getCountryData = async function (random) {
     const currentCountry = allData[random];
     currentCountry2 = currentCountry;
     const chNumbers = generateNumbers();
-
+    console.log(currentCountry);
     let A, B, C, D;
 
     for ([ind, val] of chNumbers.entries()) {
@@ -141,6 +175,7 @@ const getCountryData = async function (random) {
       if (ind === 2) C = val;
       if (ind === 3) D = val;
     }
+    console.log(A, B, C, D);
 
     const choice1 = allData[random - A]?.capital || currentCountry.allData[164];
     const choice2 = allData[random + B]?.capital || currentCountry.allData[7];
@@ -150,7 +185,10 @@ const getCountryData = async function (random) {
     const datarendered = { choice1, choice2, choice3, choice4, currentCountry };
     renderQuestion(datarendered);
   } catch (error) {
-    console.log(error);
+    const msg = ` Difficulty Fetching all data:Please Click New Game button`;
+    rendmsg.textContent = msg;
+    rendmsg.style.color = "red";
+    next.style.pointerEvents = "all";
   }
 };
 
@@ -159,7 +197,7 @@ choiceCont.addEventListener("click", function (event) {
   choiceCont.style.pointerEvents = "none";
   event.preventDefault();
   if (!(internalChance === 0)) {
-    if (internalScore === 1) {
+    if (internalScore === 9) {
       gameContent.classList.remove("show");
       congratCont.style.display = "block";
     }
@@ -203,6 +241,7 @@ choiceCont.addEventListener("click", function (event) {
 if (!(internalChance === 0)) {
   next.addEventListener("click", function () {
     resetChoice();
+    rendmsg.textContent = "";
     next.style.pointerEvents = "none";
     choiceCont.style.pointerEvents = "all";
     next.style.color = "grey";
@@ -213,7 +252,7 @@ if (!(internalChance === 0)) {
   start.addEventListener("click", function () {
     start.style.pointerEvents = "none";
     start.style.color = "grey";
-
+    choiceCont.style.pointerEvents = "all";
     rendmsg.textContent = "Good Luck!";
     rendmsg.style.color = "rgb(253, 3, 3)";
     const randomNumber = Math.floor(Math.random() * 250) + 1;
@@ -221,19 +260,7 @@ if (!(internalChance === 0)) {
   });
 }
 
-login.addEventListener("click", function (e) {
-  e.preventDefault();
-  let username2 = currentUser.value;
-  username = nameEditor(username2);
-  user.textContent = `Welcome : ${username}`;
-  if (username2) {
-    logincont.classList.add("hidden");
-    gameContent.classList.add("show");
-    failCont.classList.remove("hidden");
-  }
-
-  emptytab();
-});
+login.addEventListener("click", loginCallBack);
 
 tryagain.addEventListener("click", function () {
   cleaner();
@@ -252,4 +279,7 @@ playagain.addEventListener("click", function () {
 newGame.addEventListener("click", function () {
   cleaner();
   resetChoice();
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") loginCallBack(event);
 });
