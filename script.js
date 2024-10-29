@@ -135,7 +135,7 @@ function generateNumbers() {
   numbers.push(0);
 
   numbers.sort(() => Math.random() - 0.5);
-  console.log(numbers);
+
   return numbers;
 }
 
@@ -158,7 +158,7 @@ const getCountryData = async function (random) {
 
     const datap = await response.json();
     const { data } = datap;
-
+    console.log(data);
     data.forEach(function (ob) {
       allData.push(ob);
     });
@@ -166,7 +166,7 @@ const getCountryData = async function (random) {
     const currentCountry = allData[random];
     currentCountry2 = currentCountry;
     const chNumbers = generateNumbers();
-    console.log(currentCountry);
+
     let A, B, C, D;
 
     for ([ind, val] of chNumbers.entries()) {
@@ -175,7 +175,6 @@ const getCountryData = async function (random) {
       if (ind === 2) C = val;
       if (ind === 3) D = val;
     }
-    console.log(A, B, C, D);
 
     const choice1 = allData[random - A]?.capital || currentCountry.allData[164];
     const choice2 = allData[random + B]?.capital || currentCountry.allData[7];
